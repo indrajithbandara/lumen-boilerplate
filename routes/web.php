@@ -19,4 +19,11 @@ $app->get('/hello/{name}', function($name) use ($app) {
     return "Hello {$name}";
 });
 
-$app->get('/books', 'BooksController@index');
+$app->group(['prefix' => 'books/'], function ($app) {
+    $app->get('/','BooksController@index'); //get all the routes
+    $app->post('/','BooksController@store'); //store single route
+    $app->get('/{id}', 'BooksController@show'); //get single route
+    $app->put('/{id}','BooksController@update'); //update single route
+    $app->delete('/{id}','BooksController@destroy'); //delete single route
+});
+
